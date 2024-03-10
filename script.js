@@ -24,11 +24,12 @@ class Wordle {
     check() {
         if (myWordle.count % 5 !== 0 || myWordle.count === 0) return;
 
+        let temp = myWordle.word;
         for (let i = myWordle.count - 5; i < myWordle.count; i++) {
             let char = myWordle.boxes[i].value;
 
             if (myWordle.word.indexOf(char) !== -1) {
-                if(myWordle.word.indexOf(char) === i) {
+                if(temp.indexOf(char) === i) {
                     myWordle.green.push(i)
                 }
                 myWordle.yellow.push(i);
@@ -46,6 +47,7 @@ class Wordle {
             myWordle.boxes[a].classList.add("green");
             myWordle.boxes[a].classList.add("animate");
         })
+        if(myWordle.green.length === 5) return;
         myWordle.yellow.splice(0,5);
         myWordle.green.splice(0,5);
         myWordle.boxes.splice(0,5);
