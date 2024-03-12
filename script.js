@@ -9,49 +9,64 @@ class Wordle {
     yellow = [];
 
     putLetter(char) {
-        if (myWordle.count === 24) return;
-        if (myWordle.count % 5 === 0 && myWordle.count !== 0) return;
-        myWordle.boxes[myWordle.count].value = char;
-        myWordle.count++;
+        if (this.count === 24) return;
+        if (this.count % 5 === 0 && this.count !== 0) return;
+        this.boxes[this.count].value = char;
+        this.count++;
     }
 
     rmLetter() {
-        if (myWordle.count === 0) return;
-        myWordle.count--;
-        myWordle.boxes[myWordle.count].value = "";
+        if (this.count === 0) return;
+        this.count--;
+        this.boxes[this.count].value = "";
     }
 
     check() {
-        if (myWordle.count % 5 !== 0 || myWordle.count === 0) return;
+        if (this.count % 5 !== 0 || this.count === 0) return;
 
-        let temp = myWordle.word;
-        for (let i = myWordle.count - 5; i < myWordle.count; i++) {
-            let char = myWordle.boxes[i].value;
+        let temp = this.word;
+        for (let i = this.count - 5; i < this.count; i++) {
+            let char = this.boxes[i].value;
 
-            if (myWordle.word.indexOf(char) !== -1) {
-                if(temp.indexOf(char) === i) {
-                    myWordle.green.push(i)
+            if (this.word.indexOf(char) !== -1) {
+                if (temp.indexOf(char) === i) {
+                    this.green.push(i)
                 }
-                myWordle.yellow.push(i);
+                this.yellow.push(i);
             }
         }
-        
+
     }
 
     changeColor() {
-        myWordle.yellow.forEach(a => {
-            myWordle.boxes[a].classList.add("yellow");
-            myWordle.boxes[a].classList.add("animate");
+        this.yellow.forEach(a => {
+            this.boxes[a].classList.add("yellow");
+            this.boxes[a].classList.add("animate");
         })
-        myWordle.green.forEach(a => {
-            myWordle.boxes[a].classList.add("green");
-            myWordle.boxes[a].classList.add("animate");
+        this.green.forEach(a => {
+            this.boxes[a].classList.add("green");
+            this.boxes[a].classList.add("animate");
         })
-        if(myWordle.green.length === 5) return;
-        myWordle.yellow.splice(0,5);
-        myWordle.green.splice(0,5);
-        myWordle.boxes.splice(0,5);
-        myWordle.count = 0;
+        if (this.green.length === 5) this.gameDone("won");
+        this.yellow.splice(0, 5);
+        this.green.splice(0, 5);
+        this.boxes.splice(0, 5);
+        this.count = 0;
+    }
+    gameDone(result) {
+        let display = document.querySelector(".dis");
+        switch (result) {
+            case ("won"):
+                display.textContent = "You Won";
+                display.classList.add("show");
+                break;
+            case ("lost"):
+                display.textContent = "You Won";
+                display.classList.remove("show");
+                break;
+            default:
+                break;
+        }
     }
 
 }
